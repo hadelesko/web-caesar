@@ -1,5 +1,7 @@
 from helpers import alphabet_position, rotate_character
-
+from flask import Flask, request
+app=Flask(__name__)
+app.confi
 def encrypt(text, encryption_key):
     alphabet="abcdefghijklmnopqrstuvwxyz"
     u_alphabet=alphabet.upper()
@@ -13,6 +15,7 @@ def encrypt(text, encryption_key):
             char= text[j]
             charposition=alphabet_position(char)
             num_char+=1
+            
             corchar=encryption_key[(num_char-1)%len(encryption_key)]
             retvalue=(num_char-1, char, charposition, corchar, alphabet_position(corchar), alphabet[(charposition+alphabet_position(corchar))%len(alphabet)]  )
             encrypted_text= encrypted_text + alphabet[(charposition+alphabet_position(corchar))%len(alphabet)]
