@@ -1,5 +1,6 @@
-from helpers import alphabet_position, rotate_character
+#from helpers import alphabet_position, rotate_character
 from flask import Flask, request,redirect
+from caesar import rotate_string
 app= Flask(__name__)
 app.config['DEBUG']= True
 
@@ -35,20 +36,21 @@ form="""
         </style>
     </head>
     <body>
+    
       <!-- create your form here -->
       <form action="/rawtext" method="post">
         <label >
           Rotate by:  
-            <input type="number" name="rot" />
+            <input type="text" name="rot" value ="0" />
             <textarea  type ="text"   name = "text"  placeholder= "Type your original text "/></textarea>
-            </label>
+        </label>
         <input type="submit" value="Submit Querry"/>
     </form>
     </body>
 </html>
 """
 
-@app.route("/form")
+@app.route("/")
 def index():
     return form
 ##def encrypt(text, rot):
@@ -57,7 +59,7 @@ def index():
 ##        new_text=new_text+rotate_character(char, rot)
 ##    return new_text ## encrypted text
 
-@app.route("/encryption", methods=['POST'])
+@app.route("/", methods=['POST'])
 def encrypt():
     # your main code (input and print statements)
     #def encrypt(text, rot):
@@ -65,12 +67,13 @@ def encrypt():
     ##    rot= int(input("Rotate by: "))
     
     text=   request.form['text']           ##get text from the form
-    rot=     request.form['rotate-by']  ## get the rotation from the form
+    rot=     request.form['rot']  ## get the rotation from the form
     new_text="" ##  Initialisation of the encrypted text
     for char in text:
-        new_text=new_text+rotate_character(char, rot)
+        #new_text=new_text+rotate_character(char, rot)
+        new_text=new_text+rotate_string(char, rot)
     #print(new_text)## encrypted text
-    content=page_header+"<p>"+new_text+"</p>"+page-footer
+    content=page_header+"<h1>"+new_text+"</h1>"+page-footer
     return content
 
 #if __name__ == "__main__":
