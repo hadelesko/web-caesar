@@ -1,10 +1,21 @@
-from flask import Flask, request
+from helpers import alphabet_position, rotate_character
+from flask import Flask, request,redirect
 app= Flask(__name__)
 app.config['DEBUG']= True
 
+page_header=    """
+<!DOCTYPE html>
+<html>
+    <head><title><p><h1>Encryption: Encrypted text</h1></p></title></head>
+    <body>
+"""
+page_footer  = """
+        
+    </body>
+    </html>
+"""
 form="""
 <!DOCTYPE html>
-
 <html>
     <head>
         <style>
@@ -26,38 +37,41 @@ form="""
     <body>
       <!-- create your form here -->
       <form action="/rawtext" method="post">
-        <label>
+        <label >
           Rotate by:  
-            <input type="text" name="Rotate by"/>
-            <textarea placeholder= "Type your original text "></textarea>
-        </label>
-        <input type="submit" value="Add It"/>
+            <input type="number" name="rot" />
+            <textarea  type ="text"   name = "text"  placeholder= "Type your original text "/></textarea>
+            </label>
+        <input type="submit" value="Submit Querry"/>
     </form>
     </body>
 </html>
 """
 
-@app.route("/")
+@app.route("/form")
 def index():
     return form
+##def encrypt(text, rot):
+##    new_text="" ##  Initialisation of the encrypted text
+##    for char in text:
+##        new_text=new_text+rotate_character(char, rot)
+##    return new_text ## encrypted text
 
-from helpers import alphabet_position, rotate_character
-
-def encrypt(text, rot):
-    new_text="" ##  Initialisation of the encrypted text
-    for char in text:
-        new_text=new_text+rotate_character(char, rot)
-    return new_text ## encrypted text
-
-def main():
+@app.route("/encryption", methods=['POST'])
+def encrypt():
     # your main code (input and print statements)
     #def encrypt(text, rot):
-    text= input("Type a message: ")
-    rot= int(input("Rotate by: "))
+    ##    text= input("Type a message: ")
+    ##    rot= int(input("Rotate by: "))
+    
+    text=   request.form['text']           ##get text from the form
+    rot=     request.form['rotate-by']  ## get the rotation from the form
     new_text="" ##  Initialisation of the encrypted text
     for char in text:
         new_text=new_text+rotate_character(char, rot)
-    print(new_text)## encrypted text
+    #print(new_text)## encrypted text
+    content=page_header+"<p>"+new_text+"</p>"+page-footer
+    return content
 
 #if __name__ == "__main__":
    # main()
