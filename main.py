@@ -41,7 +41,7 @@ form   =   """
                         <label  >Rotate by:</label> 
                         <input type="text" name="rot" value="0">
                 </div>
-                <textarea  type ="text"   name = "text"  value=""/>{0}</textarea><br>        
+                <textarea  type ="text"   name = "text" />{0}</textarea><br>        
                 <input type="submit" />
      </form>
     </body>
@@ -67,7 +67,7 @@ def encrypt():
     ## encrypted text
      
     content=form.format(new_text)
-    
+    #content= 'Rotating  "' + text+ '    gives  ' +'  "' +form.format(new_text)+'"
     return content
 
 app.run()
